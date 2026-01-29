@@ -3,7 +3,7 @@ import SubscribeLink from "./SubscribeLink";
 import UserReview from "./UserReview";
 
 const ShowCase = () => (
-  <div>
+  <div className="my-auto">
     <div>ShowCase</div>
     <Advantages />
     <SubscribeLink />

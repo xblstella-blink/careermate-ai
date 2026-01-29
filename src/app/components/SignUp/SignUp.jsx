@@ -2,8 +2,7 @@ import Form from "./components/Form";
 import ShowCase from "./components/ShowCase";
 
 const SignUp = () => (
-  <div>
-    <p>Sign Up</p>
+  <div className="flex *:flex-1 p-8 min-h-dvh">
     <Form />
     <ShowCase />
   </div>
