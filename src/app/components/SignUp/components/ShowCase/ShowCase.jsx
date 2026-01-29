@@ -1,13 +1,17 @@
 import Advantages from "./components/Advantages";
 import SubscribeLink from "./SubscribeLink";
 import UserReview from "./UserReview";
+import background from "./assets/background@2x.png";
+import Image from "next/image";
 
 const ShowCase = () => (
-  <div>
-    <div>ShowCase</div>
-    <Advantages />
-    <SubscribeLink />
-    <UserReview />
+  <div className="relative">
+    <Image className="absolute" src={background} fill alt="" />
+    <div className="absolute inset-0 p-8  ">
+      <SubscribeLink />
+      <Advantages />
+      <UserReview />
+    </div>
   </div>
 );
 export default ShowCase;
