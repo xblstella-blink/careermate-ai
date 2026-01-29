@@ -14,8 +14,12 @@ const Form = () => (
       <Field label="Email" placeholder="Your email" type="email" />
       <Field label="Password" placeholder="Create a password" type="password" />
     </div>
-    <Button />
-    <LoginLink />
+    <div className="mt-10">
+      <Button>Create Account</Button>
+    </div>
+    <div>
+      <LoginLink />
+    </div>
   </form>
 );
 export default Form;
