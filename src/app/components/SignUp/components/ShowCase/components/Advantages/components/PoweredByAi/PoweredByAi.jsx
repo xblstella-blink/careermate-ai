@@ -4,7 +4,7 @@ import logo3 from "./assets/logo3.png";
 import logo4 from "./assets/logo4.png";
 import Image from "next/image";
 const PoweredByAi = () => (
-  <div className="flex gap-4">
+  <div className="flex gap-2 mt-auto">
     {[
       { name: "logo1", image: logo1 },
       { name: "logo2", image: logo2 },
