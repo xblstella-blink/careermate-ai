@@ -1,6 +1,6 @@
-import { render, screen } from "@testing-library/react";
-import { describe, test, expect } from "vitest";
-
+import { render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { vi, describe, test, expect } from "vitest";
 import Field from "./Field";
 
 describe("Field", () => {
@@ -11,6 +11,7 @@ describe("Field", () => {
         value="alice@email.com"
         placeholder="Please type your email"
         type="text"
+        onChange={vi.fn()}
       />,
     );
     expect(screen.getByRole("textbox", { name: "Email" })).toBeInTheDocument();
@@ -26,5 +27,74 @@ describe("Field", () => {
       "value",
       "alice@email.com",
     );
+  });
+
+  test("renders show pasword button when type is password", async () => {
+    const user = userEvent.setup();
+    render(<Field label="Password" type="password" value="Password123." />);
+    expect(screen.getByLabelText("Password")).toHaveAttribute(
+      "type",
+      "password",
+    );
+    expect(
+      screen.getByRole("button", { name: "Show Password" }),
+    ).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Show Password" }));
+    expect(screen.getByRole("textbox", { name: "Password" })).toHaveAttribute(
+      "type",
+      "text",
+    );
+    expect(screen.getByRole("textbox", { name: "Password" })).toHaveAttribute(
+      "value",
+      "Password123.",
+    );
+
+    expect(
+      screen.queryByRole("button", { name: "Show Password" }),
+    ).not.toBeInTheDocument();
+
+    expect(
+      screen.getByRole("button", { name: "Hide Password" }),
+    ).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Hide Password" }));
+    expect(screen.getByLabelText("Password")).toHaveAttribute(
+      "type",
+      "password",
+    );
+    expect(
+      screen.queryByRole("button", { name: "Hide Password" }),
+    ).not.toBeInTheDocument();
+  });
+
+  test("render error message", () => {
+    render(
+      <Field
+        label="Email"
+        type="text"
+        value="alice@email.com"
+        placeholder="Please type your email"
+        error="Invalid email address"
+      />,
+    );
+
+    expect(
+      within(screen.getByRole("alert")).getByText("Invalid email address"),
+    ).toBeInTheDocument();
+    expect(screen.getByText("Invalid email address")).toBeInTheDocument();
+  });
+  test("calls onChange on type in textbox", async () => {
+    const onChange = vi.fn();
+    const user = userEvent.setup();
+
+    render(<Field label="email" value="" onChange={onChange} />);
+
+    await user.type(
+      screen.getByRole("textbox", { name: "email" }),
+      "alice@email.com",
+    );
+
+    expect(onChange).toHaveBeenCalled();
   });
 });

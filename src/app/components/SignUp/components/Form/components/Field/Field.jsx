@@ -31,12 +31,22 @@ const Field = ({ label, type, placeholder, value, onChange, error }) => {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-0 top-0 bottom-0 flex items-center px-4 cursor-pointer text-gray-300"
             >
-              {showPassword ? <Eye /> : <EyeClosed />}
+              {showPassword ? (
+                <Eye aria-label="Hide Password" />
+              ) : (
+                <EyeClosed aria-label="Show Password" />
+              )}
             </button>
           )}
         </div>
       </div>
-      <div className="text-sm text-red-600 mt-1 pl-4 h-[1em]">{error}</div>
+      <div className="text-sm text-red-600 mt-1 pl-4 h-[1em] relative">
+        {error && (
+          <div className="absolute" role="alert">
+            {error}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
