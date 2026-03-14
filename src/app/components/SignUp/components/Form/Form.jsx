@@ -3,31 +3,19 @@ import { useState } from "react";
 import Button from "./components/Button";
 import Field from "./components/Field";
 import LoginLink from "./components/LoginLink";
-import { isEmpty, isStrongPassword } from "validator";
-import isEmail from "validator/lib/isEmail";
+import { isStrongPassword } from "validator";
+import getError from "./utils/getError";
+import fullNameError from "./utils/getFullNameError";
+import emailError from "./utils/getEmailError";
+import { isEmpty } from "validator";
 
-const getError = (value, errors) =>
-  errors.find((error) => error.match(value))?.message || "";
 const Form = () => {
   const [fullName, setFullName] = useState("");
-  const fullNameError = getError(fullName, [
-    {
-      match: (value) => isEmpty(value),
-      message: "Please enter your full name",
-    },
-  ]);
+  fullNameError(fullName);
 
   const [email, setEmail] = useState("");
-  const emailError = getError(email, [
-    {
-      match: (value) => isEmpty(value),
-      message: "Please enter your email",
-    },
-    {
-      match: (value) => !isEmail(value),
-      message: "Please enter a valid email address",
-    },
-  ]);
+  emailError(email);
+
   const [password, setPassword] = useState("");
   const passwordError = getError(password, [
     { match: (value) => isEmpty(value), message: "Please enter your password" },
