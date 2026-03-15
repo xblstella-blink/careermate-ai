@@ -29,7 +29,7 @@ describe("Field", () => {
     );
   });
 
-  test("renders show pasword button when type is password", async () => {
+  test("renders show password button when type is password", async () => {
     const user = userEvent.setup();
     render(<Field label="Password" type="password" value="Password123." />);
     expect(screen.getByLabelText("Password")).toHaveAttribute(
