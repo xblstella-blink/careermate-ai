@@ -2,7 +2,7 @@ import getError from "../getError";
 import { isEmpty } from "validator";
 import isEmail from "validator/lib/isEmail";
 
-const emailError = (email) =>
+const getEmailError = (email) =>
   getError(email, [
     {
       match: (value) => isEmpty(value),
@@ -13,4 +13,4 @@ const emailError = (email) =>
       message: "Please enter a valid email address",
     },
   ]);
-export default emailError;
+export default getEmailError;

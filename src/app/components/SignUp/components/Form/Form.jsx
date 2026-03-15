@@ -3,27 +3,22 @@ import { useState } from "react";
 import Button from "./components/Button";
 import Field from "./components/Field";
 import LoginLink from "./components/LoginLink";
-import { isStrongPassword } from "validator";
-import getError from "./utils/getError";
 import fullNameError from "./utils/getFullNameError";
 import emailError from "./utils/getEmailError";
-import { isEmpty } from "validator";
+import passwordError from "./utils/getPasseordError";
+import getFullNameError from "./utils/getFullNameError";
+import getEmailError from "./utils/getEmailError";
+import getPasswordError from "./utils/getPasseordError";
 
 const Form = () => {
   const [fullName, setFullName] = useState("");
-  fullNameError(fullName);
+  const fullNameError = getFullNameError(fullName);
 
   const [email, setEmail] = useState("");
-  emailError(email);
+  const emailError = getEmailError(email);
 
   const [password, setPassword] = useState("");
-  const passwordError = getError(password, [
-    { match: (value) => isEmpty(value), message: "Please enter your password" },
-    {
-      match: (value) => !isStrongPassword(value),
-      message: "Password must be at least 8 character long",
-    },
-  ]);
+  const passwordError = getPasswordError(password);
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 

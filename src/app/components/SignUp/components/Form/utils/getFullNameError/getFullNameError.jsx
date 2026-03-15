@@ -1,6 +1,6 @@
 import getError from "../getError";
 import { isEmpty } from "validator";
-const fullNameError = (fullName) =>
+const getFullNameError = (fullName) =>
   getError(fullName, [
     {
       match: (value) => isEmpty(value),
@@ -8,4 +8,4 @@ const fullNameError = (fullName) =>
     },
   ]);
 
-export default fullNameError;
+export default getFullNameError;
