@@ -6,9 +6,10 @@ import LoginLink from "./components/LoginLink";
 import getFullNameError from "./utils/getFullNameError";
 import getEmailError from "./utils/getEmailError";
 import getPasswordError from "./utils/getPasswordError";
-import Dialog from "./components/Dialog";
 import axios from "axios";
-import { CircleAlert } from "lucide-react";
+import ServerError from "./components/ServerError";
+import RegisteredSuccess from "./components/RegisteredSuccess";
+import { useRouter } from "next/navigation";
 
 const Form = () => {
   const [fullName, setFullName] = useState("");
@@ -23,6 +24,9 @@ const Form = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [serverError, setServerError] = useState();
+  const [isRegistered, setIsRegistered] = useState(false);
+
+  const router = useRouter();
 
   return (
     <>
@@ -74,8 +78,8 @@ const Form = () => {
               }
 
               try {
-                throw new Error("register failed");
-                await axios.post("http://localhost:3000/v1/auth/register", {
+                //throw new Error("register failed");
+                await axios.post("http://localhost:8000/v1/auth/register", {
                   fullName,
                   email,
                   password,
@@ -86,10 +90,8 @@ const Form = () => {
                 return;
               }
 
-              console.log("register success");
-
-              console.log({ fullName, email, password });
-              console.log({ fullNameError });
+              setIsRegistered(true);
+              router.push("/dashboard");
             }}
           >
             Create Account
@@ -99,36 +101,8 @@ const Form = () => {
           <LoginLink />
         </div>
       </form>
-      {serverError && (
-        <Dialog>
-          <div className="p-10 text-center space-y-4">
-            <div>
-              <CircleAlert className="text-orange-500 mx-auto" size={40} />
-            </div>
-            {{
-              409: (
-                <div className="space-y-10">
-                  <div className="font-bold">
-                    <p>Email already registered, please log in instead</p>
-                  </div>
-                  <div>
-                    <Button>Go to Login</Button>
-                  </div>
-                </div>
-              ),
-            }[serverError.response?.status] || (
-              <div className="space-y-10">
-                <div className="font-bold">
-                  <p>Something went wrong, please try again later</p>
-                </div>
-                <div>
-                  <Button>Back</Button>
-                </div>
-              </div>
-            )}
-          </div>
-        </Dialog>
-      )}
+      {serverError && <ServerError status={serverError.response?.status} />}
+      {isRegistered && <RegisteredSuccess />}
     </>
   );
 };
