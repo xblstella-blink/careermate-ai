@@ -5,7 +5,7 @@ import background from "./assets/background@2x.png";
 import Image from "next/image";
 
 const ShowCase = () => (
-  <div className="relative p-8 ">
+  <div className="relative p-8 min-h-[600px]">
     <Image className="absolute" src={background} fill size="100vw" alt="" />
     <div className="relative h-full ">
       <SubscribeLink />

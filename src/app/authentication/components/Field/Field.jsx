@@ -8,7 +8,7 @@ const Field = ({ label, type, placeholder, value, onChange, error }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div>
+    <div className="[&+&]:mt-6 [&:nth-last-child(2)]:mb-6">
       <div className="mb-2">
         <label className="text-grey-700 mb-2 text-sm block " htmlFor={id}>
           {label}
