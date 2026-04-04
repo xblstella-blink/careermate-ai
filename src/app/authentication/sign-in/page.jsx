@@ -59,13 +59,16 @@ const SignInPage = () => {
             onClick={(event) => {
               onSubmit(async () => {
                 try {
-                  await axios.post("http://localhost:8000/v1/auth/login", data);
+                  await axios.post(
+                    `${process.env.NEXT_PUBLIC_AUTH_API}/auth/login`,
+                    data,
+                  );
                 } catch (error) {
                   setServerError(error);
                   return;
                 }
                 router.push("/dashboard");
-              }, event);
+              });
             }}
           >
             Login

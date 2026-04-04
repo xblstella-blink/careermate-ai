@@ -68,7 +68,7 @@ const SignUpPage = () => {
                 try {
                   //throw new Error("register failed");
                   await axios.post(
-                    "http://localhost:8000/v1/auth/register",
+                    `${process.env.NEXT_PUBLIC_AUTH_API}/auth/register`,
                     data,
                   );
                   setIsRegistered(true);
@@ -79,7 +79,7 @@ const SignUpPage = () => {
                   console.error("register fail", err);
                   return;
                 }
-              }, event);
+              });
             }}
           >
             Create Account

@@ -11,14 +11,14 @@ const useForm = ({ fields, validation }) => {
     return initialData;
   });
 
-  const onChange = (key) => (event) => {
+  const onChange = (field) => (event) => {
     setData((previousData) => ({
       ...previousData,
-      [key]: event.target.value,
+      [field]: event.target.value,
     }));
   };
 
-  const onSubmit = (handleSubmit, event) => {
+  const onSubmit = (handleSubmit) => (event) => {
     event.preventDefault();
     setIsSubmitted(true);
 
