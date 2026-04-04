@@ -3,6 +3,7 @@ import user2 from "./assets/user2.jpg";
 import user3 from "./assets/user3.jpg";
 import user4 from "./assets/user4.jpg";
 import Image from "next/image";
+
 const Coach = () => (
   <div>
     <div className="flex">

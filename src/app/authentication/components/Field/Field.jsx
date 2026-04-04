@@ -1,7 +1,6 @@
 import { Eye, EyeClosed } from "lucide-react";
-import { useId } from "react";
 import { twMerge } from "tailwind-merge";
-import { useState } from "react";
+import { useState, useId } from "react";
 
 const Field = ({ label, type, placeholder, value, onChange, error }) => {
   const id = useId();
@@ -50,4 +49,5 @@ const Field = ({ label, type, placeholder, value, onChange, error }) => {
     </div>
   );
 };
+
 export default Field;

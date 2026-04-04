@@ -6,4 +6,5 @@ const Button = ({ children, onClick }) => (
     {children}
   </button>
 );
+
 export default Button;

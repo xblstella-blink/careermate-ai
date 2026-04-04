@@ -32,8 +32,8 @@ const SignUpPage = () => {
     <>
       <form className="w-[440px] mx-auto">
         <Header
-          title={"Create Your Account"}
-          subTitle={"Join Career Mate AI and start your smart journey"}
+          title="Create Your Account"
+          subTitle="Join Career Mate AI and start your smart journey"
         />
 
         <Field
@@ -76,7 +76,7 @@ const SignUpPage = () => {
                   router.push("/dashboard");
                 } catch (err) {
                   setServerError(err);
-                  console.error("register fail", err);
+
                   return;
                 }
               });
@@ -85,7 +85,7 @@ const SignUpPage = () => {
             Create Account
           </Button>{" "}
           <Hint
-            message={"Already have an account"}
+            message="Already have an account"
             action={{ href: "/authentication/sign-in", text: "Login" }}
           />
         </div>
@@ -95,4 +95,5 @@ const SignUpPage = () => {
     </>
   );
 };
+
 export default SignUpPage;

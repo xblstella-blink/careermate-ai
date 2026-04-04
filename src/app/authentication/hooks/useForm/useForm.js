@@ -2,12 +2,14 @@ import { useState } from "react";
 
 const useForm = ({ fields, validation }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
+
   const [data, setData] = useState(() => {
     const initialData = {};
 
     fields.forEach((field) => {
       initialData[field] = "";
     });
+
     return initialData;
   });
 

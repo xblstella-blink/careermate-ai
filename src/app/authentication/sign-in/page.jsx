@@ -28,8 +28,8 @@ const SignInPage = () => {
     <>
       <form className="w-[440px] mx-auto">
         <Header
-          title={"Welcome Back"}
-          subTitle={"Log in to continue your AI journey"}
+          title="Welcome Back"
+          subTitle="Log in to continue your AI journey"
         />
         {serverError && <ServerError status={serverError.response?.status} />}
         <Field
@@ -65,6 +65,7 @@ const SignInPage = () => {
                   );
                 } catch (error) {
                   setServerError(error);
+
                   return;
                 }
                 router.push("/dashboard");

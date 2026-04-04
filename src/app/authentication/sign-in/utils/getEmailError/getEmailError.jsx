@@ -8,4 +8,5 @@ const getEmailError = (email) =>
       message: "Please enter your email",
     },
   ]);
+
 export default getEmailError;

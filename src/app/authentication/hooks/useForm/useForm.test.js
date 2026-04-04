@@ -37,7 +37,7 @@ describe("useForm", () => {
     expect(result.current.error.username).toBeUndefined();
   });
 
-  test("hadndles form submit with error", () => {
+  test("handles form submit with error", () => {
     const { result } = renderHook(() =>
       useForm({
         fields: ["username"],

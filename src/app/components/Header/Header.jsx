@@ -6,4 +6,5 @@ const Header = () => (
     <Image src={logo} alt="CareerMate AI" width={184} height={24} />
   </div>
 );
+
 export default Header;

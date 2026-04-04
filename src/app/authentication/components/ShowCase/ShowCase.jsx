@@ -14,4 +14,5 @@ const ShowCase = () => (
     </div>
   </div>
 );
+
 export default ShowCase;
