@@ -63,24 +63,22 @@ const SignUpPage = () => {
 
         <div>
           <Button
-            onClick={async (event) => {
-              onSubmit(async () => {
-                try {
-                  //throw new Error("register failed");
-                  await axios.post(
-                    `${process.env.NEXT_PUBLIC_AUTH_API}/auth/register`,
-                    data,
-                  );
-                  setIsRegistered(true);
-                  await new Promise((resolve) => setTimeout(resolve, 2000));
-                  router.push("/dashboard");
-                } catch (err) {
-                  setServerError(err);
+            onClick={onSubmit(async () => {
+              try {
+                //throw new Error("register failed");
+                await axios.post(
+                  `${process.env.NEXT_PUBLIC_AUTH_API}/auth/register`,
+                  data,
+                );
+                setIsRegistered(true);
+                await new Promise((resolve) => setTimeout(resolve, 2000));
+                router.push("/dashboard");
+              } catch (err) {
+                setServerError(err);
 
-                  return;
-                }
-              });
-            }}
+                return;
+              }
+            })}
           >
             Create Account
           </Button>{" "}

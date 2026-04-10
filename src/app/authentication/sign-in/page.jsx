@@ -56,21 +56,19 @@ const SignInPage = () => {
         />
         <div>
           <Button
-            onClick={(event) => {
-              onSubmit(async () => {
-                try {
-                  await axios.post(
-                    `${process.env.NEXT_PUBLIC_AUTH_API}/auth/login`,
-                    data,
-                  );
-                } catch (error) {
-                  setServerError(error);
+            onClick={onSubmit(async () => {
+              try {
+                await axios.post(
+                  `${process.env.NEXT_PUBLIC_AUTH_API}/auth/login`,
+                  data,
+                );
+              } catch (error) {
+                setServerError(error);
 
-                  return;
-                }
-                router.push("/dashboard");
-              });
-            }}
+                return;
+              }
+              router.push("/dashboard");
+            })}
           >
             Login
           </Button>

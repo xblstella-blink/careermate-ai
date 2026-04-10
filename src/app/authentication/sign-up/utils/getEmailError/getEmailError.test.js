@@ -1,4 +1,3 @@
-import { describe, expect, test } from "vitest";
 import getEmailError from "./getEmailError";
 
 describe("getEmailError", () => {
