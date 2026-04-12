@@ -33,7 +33,7 @@ const NavList = () => {
             icon={
               <Icon
                 size={18}
-                className={isActive ? "text-blue-500" : "text-gray-400"}
+                className={isActive ? "text-blue-700" : "text-gray-400"}
               />
             }
             label={label}
