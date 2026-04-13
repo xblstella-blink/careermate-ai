@@ -10,7 +10,7 @@ const AuthenticationProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const fetchUser = async () => {
-    const response = await auth.get("/auth/user");
+    const response = await auth.get("/users/me");
     setUser(response.data.data);
   };
 
@@ -20,10 +20,15 @@ const AuthenticationProvider = ({ children }) => {
 
     try {
       const token = localStorage.getItem("token");
-      if (!token) throw new Error("No token found");
+      if (!token) {
+        setLoading(false);
+
+        return;
+      }
       await fetchUser();
     } catch (error) {
       setError(error);
+
       localStorage.removeItem("token");
     } finally {
       setLoading(false);
@@ -40,11 +45,12 @@ const AuthenticationProvider = ({ children }) => {
     setError(null);
     try {
       const response = await auth.post("/auth/login", { email, password });
-      const { token } = response.data.data;
-      localStorage.setItem("token", token);
-      await fetchUser();
+      const { accessToken, user } = response.data.data;
+      localStorage.setItem("token", accessToken);
+      setUser(user);
     } catch (error) {
       setError(error);
+      throw error;
     } finally {
       setLoading(false);
     }

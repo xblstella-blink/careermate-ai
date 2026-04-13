@@ -43,7 +43,7 @@ export default defineConfig([
       "arrow-body-style": "error",
       "object-shorthand": "error",
       "no-restricted-globals": ["error", "React"],
-      "no-console": "error",
+      //"no-console": "error",
 
       "no-restricted-properties": [
         "error",

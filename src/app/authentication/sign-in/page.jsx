@@ -7,9 +7,10 @@ import Hint from "../components/Hint";
 import useForm from "../hooks/useForm";
 import getEmailError from "./utils/getEmailError";
 import getPasswordError from "./utils/getPasswordError";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ServerError from "./components/ServerError";
+import { useAuthentication } from "@/app/contexts/Authentication";
 
 const SignInPage = () => {
   const { onChange, data, onSubmit, isSubmitted, error } = useForm({
@@ -23,6 +24,11 @@ const SignInPage = () => {
   const [serverError, setServerError] = useState(false);
 
   const router = useRouter();
+  const { login, error: authError, loading, user } = useAuthentication();
+
+  useEffect(() => {
+    if (user) router.push("/dashboard");
+  }, [user, router]);
 
   return (
     <>
@@ -58,19 +64,15 @@ const SignInPage = () => {
           <Button
             onClick={onSubmit(async () => {
               try {
-                await axios.post(
-                  `${process.env.NEXT_PUBLIC_AUTH_API}/auth/login`,
-                  data,
-                );
+                await login(data.email, data.password);
               } catch (error) {
                 setServerError(error);
 
                 return;
               }
-              router.push("/dashboard");
             })}
           >
-            Login
+            {loading ? "loading" : "Login"}
           </Button>
           <Hint
             message="Don't have an account?"

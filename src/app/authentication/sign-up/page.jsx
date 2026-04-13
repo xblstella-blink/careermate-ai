@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import Header from "../components/Header";
 import Hint from "../components/Hint";
 import useForm from "../hooks/useForm";
+import auth from "@/app/apis/auth";
 
 const SignUpPage = () => {
   const { onChange, data, onSubmit, isSubmitted, error } = useForm({
@@ -24,7 +25,6 @@ const SignUpPage = () => {
   });
 
   const [serverError, setServerError] = useState();
-  const [isRegistered, setIsRegistered] = useState(false);
 
   const router = useRouter();
 
@@ -65,13 +65,9 @@ const SignUpPage = () => {
           <Button
             onClick={onSubmit(async () => {
               try {
-                //throw new Error("register failed");
-                await axios.post(
-                  `${process.env.NEXT_PUBLIC_AUTH_API}/auth/register`,
-                  data,
-                );
-                setIsRegistered(true);
-                await new Promise((resolve) => setTimeout(resolve, 2000));
+                const response = await auth.post("/auth/register", data);
+                const { accessToken } = response.data.data;
+                localStorage.setItem("token", accessToken);
                 router.push("/dashboard");
               } catch (err) {
                 setServerError(err);
