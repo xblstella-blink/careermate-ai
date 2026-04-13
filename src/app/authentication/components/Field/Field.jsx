@@ -11,7 +11,7 @@ const Field = ({
   error,
   hint,
   readOnly = false,
-  optional = false,
+  useSetting = false,
 }) => {
   const id = useId();
   const [showPassword, setShowPassword] = useState(false);
@@ -30,6 +30,7 @@ const Field = ({
               "px-4 h-12 rounded-3xl border border-gray-300 w-full",
               error && "border-red-500",
               readOnly && "bg-gray-50 cursor-not-allowed",
+              useSetting && "rounded-xl",
             )} //{border-red-500 : error}
             type={showPassword ? "text" : type}
             value={value}

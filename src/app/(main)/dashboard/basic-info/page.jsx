@@ -24,12 +24,14 @@ const BasicInfoPage = () => {
         value={data.fullName}
         onChange={onChange("fullName")}
         error={isSubmitted && error.fullName}
+        useSetting
       />
       <Field
         label="Display Name"
         placeholder="How your name appears in the app"
         value={data.displayName}
         onChange={onChange("displayName")}
+        useSetting
       />
 
       <div className="w-[153px]">

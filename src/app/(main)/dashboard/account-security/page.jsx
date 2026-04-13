@@ -26,6 +26,7 @@ const AccountSecurityPage = () => {
           hint="Your email cannot be charged here, Contact support is needed"
           readOnly
           value={data.email}
+          useSetting
         />
       </div>
       <div className="py-3 mb-4 border-b border-gray-100">
@@ -37,6 +38,7 @@ const AccountSecurityPage = () => {
         onChange={onChange("currentPassword")}
         type="password"
         placeholder="Enter your current password"
+        useSetting
       />
       <Field
         label="New Password"
@@ -44,12 +46,14 @@ const AccountSecurityPage = () => {
         value={data.newPassword}
         type="password"
         onChange={onChange("newPassword")}
+        useSetting
       />
       <Field
         label="Confirm New Password"
         placeholder="Re-enter new password"
         value={data.confirmNewPassword}
         onChange={onChange("confirmNewPassword")}
+        useSetting
         type="password"
       />
 

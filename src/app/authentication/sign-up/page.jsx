@@ -88,7 +88,12 @@ const SignUpPage = () => {
           />
         </div>
       </form>
-      {serverError && <ServerError status={serverError.response?.status} />}
+      {serverError && (
+        <ServerError
+          status={serverError.response?.status}
+          onClose={() => setServerError(null)}
+        />
+      )}
       {isRegistered && <RegisteredSuccess />}
     </>
   );
