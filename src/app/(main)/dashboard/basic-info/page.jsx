@@ -2,13 +2,21 @@
 import Button from "@/app/authentication/components/Button";
 import Field from "@/app/authentication/components/Field";
 import useForm from "@/app/authentication/hooks/useForm";
-import getFullnameError from "./utils/getFullnameError";
+import { z } from "zod";
+import { useAuthentication } from "@/app/contexts/Authentication";
+
+const schema = z.object({
+  fullName: z.string().min(1, "Full name is required"),
+  displayName: z.string().optional(),
+});
 
 const BasicInfoPage = () => {
+  const { user } = useAuthentication();
+
   const { data, onChange, onSubmit, error, isSubmitted } = useForm({
     fields: ["fullName", "displayName"],
-    validation: { fullName: getFullnameError },
-    initialData: { fullName: "Alice Wang" },
+    schema,
+    initialData: { fullName: user.fullName, displayName: "" },
   });
 
   const handleSave = () => {

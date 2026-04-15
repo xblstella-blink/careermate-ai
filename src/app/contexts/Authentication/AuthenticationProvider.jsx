@@ -63,7 +63,7 @@ const AuthenticationProvider = ({ children }) => {
 
   return (
     <AuthenticationContext.Provider
-      value={{ user, loading, error, login, logout }}
+      value={{ user, loading, error, login, logout, mutate: handleGetUser }}
     >
       {children}
     </AuthenticationContext.Provider>

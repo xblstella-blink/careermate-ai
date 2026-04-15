@@ -5,7 +5,6 @@ import Field from "../components/Field";
 import getFullNameError from "./utils/getFullNameError";
 import getEmailError from "./utils/getEmailError";
 import getPasswordError from "./utils/getPasswordError";
-import axios from "axios";
 import ServerError from "./components/ServerError";
 import RegisteredSuccess from "../components/RegisteredSuccess";
 import { useRouter } from "next/navigation";
@@ -13,15 +12,21 @@ import Header from "../components/Header";
 import Hint from "../components/Hint";
 import useForm from "../hooks/useForm";
 import auth from "@/app/apis/auth";
+import { email, z } from "zod";
+
+const schema = z.object({
+  fullName: z.string().min(1, "Name is required"),
+  email: z
+    .string()
+    .min(1, "Email is required")
+    .email("Invalid email address is required"),
+  password: z.string().min(8, "At least 8 characters"),
+});
 
 const SignUpPage = () => {
   const { onChange, data, onSubmit, isSubmitted, error } = useForm({
     fields: ["fullName", "email", "password"],
-    validation: {
-      fullName: getFullNameError,
-      email: getEmailError,
-      password: getPasswordError,
-    },
+    schema,
   });
 
   const [serverError, setServerError] = useState();
@@ -90,7 +95,6 @@ const SignUpPage = () => {
           onClose={() => setServerError(null)}
         />
       )}
-      {isRegistered && <RegisteredSuccess />}
     </>
   );
 };

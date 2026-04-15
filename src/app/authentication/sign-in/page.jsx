@@ -1,24 +1,25 @@
 "use client";
-import axios from "axios";
+
 import Button from "../components/Button";
 import Field from "../components/Field";
 import Header from "../components/Header";
 import Hint from "../components/Hint";
 import useForm from "../hooks/useForm";
-import getEmailError from "./utils/getEmailError";
-import getPasswordError from "./utils/getPasswordError";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ServerError from "./components/ServerError";
 import { useAuthentication } from "@/app/contexts/Authentication";
+import { z } from "zod";
+
+const schema = z.object({
+  email: z.string().min(1, "Email is required"),
+  password: z.string().min(1, "Password is required"),
+});
 
 const SignInPage = () => {
   const { onChange, data, onSubmit, isSubmitted, error } = useForm({
     fields: ["email", "password"],
-    validation: {
-      email: getEmailError,
-      password: getPasswordError,
-    },
+    schema,
   });
 
   const [serverError, setServerError] = useState(false);
