@@ -1,7 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import { useId } from "react";
 
-const SelectField = ({ label, options }) => {
+const SelectField = ({ label, options, value, onChange }) => {
   const id = useId();
 
   return (
@@ -12,9 +12,13 @@ const SelectField = ({ label, options }) => {
       <div className="relative">
         <select
           id={id}
+          value={value}
+          onChange={onChange}
           className="px-4 h-12 rounded-xl border border-gray-300 w-full appearance-none"
         >
-          <option>--Select--</option>
+          <option value="" disabled>
+            --Select--
+          </option>
           {options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}

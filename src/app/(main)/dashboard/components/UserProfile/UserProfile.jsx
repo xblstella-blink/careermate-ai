@@ -16,7 +16,7 @@ const UserProfile = () => {
           </div>
         </div>
         <div className="text-sm text-[#161616] mt-3">
-          {[user?.goal, user?.field].filter(Boolean).join(" · ")}
+          {[user?.goal, user?.role].filter(Boolean).join(" · ")}
         </div>
       </div>
       <button

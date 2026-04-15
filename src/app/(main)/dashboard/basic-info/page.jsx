@@ -4,6 +4,8 @@ import Field from "@/app/authentication/components/Field";
 import useForm from "@/app/authentication/hooks/useForm";
 import { z } from "zod";
 import { useAuthentication } from "@/app/contexts/Authentication";
+import auth from "@/app/apis/auth";
+import { toast } from "sonner";
 
 const schema = z.object({
   fullName: z.string().min(1, "Full name is required"),
@@ -11,16 +13,18 @@ const schema = z.object({
 });
 
 const BasicInfoPage = () => {
-  const { user } = useAuthentication();
+  const { user, mutate } = useAuthentication();
 
   const { data, onChange, onSubmit, error, isSubmitted } = useForm({
     fields: ["fullName", "displayName"],
     schema,
-    initialData: { fullName: user.fullName, displayName: "" },
+    initialData: { fullName: user.fullName, displayName: user.displayName },
   });
 
-  const handleSave = () => {
-    //TODO: addToast('Saved successfully)
+  const handleSave = async () => {
+    await auth.patch("/users/me", data);
+    await mutate();
+    await toast.success("Basic info update successfully");
   };
 
   return (

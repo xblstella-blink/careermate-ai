@@ -3,11 +3,27 @@
 import Button from "@/app/authentication/components/Button";
 import Field from "@/app/authentication/components/Field";
 import useForm from "@/app/authentication/hooks/useForm";
+import z from "zod";
+
+const schema = z
+  .object({
+    currentPassword: z.string().min(1, "Current password is required"),
+    newPassword: z
+      .string()
+      .min(8, "At least 8 characters")
+      .regex(/[a-zA-Z]/, "Password must contain at least one letter")
+      .regex(/[0-9]/, "Password must contain at lease one number"),
+    confirmNewPassword: z.string().min(1, "Please confirm your password"),
+  })
+  .refine((data) => data.newPassword === data.confirmNewPassword, {
+    path: ["confirmNewPassword"],
+    message: "Password do not match",
+  });
 
 const AccountSecurityPage = () => {
   const { data, onChange, onSubmit, error, isSubmitted } = useForm({
     fields: ["email", "currentPassword", "newPassword", "confirmNewPassword"],
-    validation: {},
+    schema,
     initialData: { email: "alice@example.com" },
   });
 
@@ -39,6 +55,7 @@ const AccountSecurityPage = () => {
         type="password"
         placeholder="Enter your current password"
         useSetting
+        error={isSubmitted && error.currentPassword}
       />
       <Field
         label="New Password"
@@ -47,6 +64,7 @@ const AccountSecurityPage = () => {
         type="password"
         onChange={onChange("newPassword")}
         useSetting
+        error={isSubmitted && error.newPassword}
       />
       <Field
         label="Confirm New Password"
@@ -55,6 +73,7 @@ const AccountSecurityPage = () => {
         onChange={onChange("confirmNewPassword")}
         useSetting
         type="password"
+        error={isSubmitted && error.confirmNewPassword}
       />
 
       <div className="w-[169px]">

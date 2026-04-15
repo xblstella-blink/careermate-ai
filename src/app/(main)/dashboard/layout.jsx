@@ -20,7 +20,6 @@ const DashboardLayout = ({ children }) => {
       return;
     }
     handleSigninRedirectionEffectEvent();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
 
   if (loading) {
@@ -38,7 +37,7 @@ const DashboardLayout = ({ children }) => {
         <aside className="w-52 shrink-0">
           <NavList />
         </aside>
-        <div className="flex-1 pl-6">{children} </div>
+        <div className="flex-1 pl-6">{children}</div>
       </div>
     </div>
   );

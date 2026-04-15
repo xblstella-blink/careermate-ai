@@ -16,11 +16,12 @@ import { email, z } from "zod";
 
 const schema = z.object({
   fullName: z.string().min(1, "Name is required"),
-  email: z
+  email: z.string().min(1, "Email is required").email("Invalid email format"),
+  password: z
     .string()
-    .min(1, "Email is required")
-    .email("Invalid email address is required"),
-  password: z.string().min(8, "At least 8 characters"),
+    .min(8, "At least 8 characters")
+    .regex(/[a-zA-Z]/, "Password must contain at least one letter")
+    .regex(/[0-9]/, "Password must contain at lease one number"),
 });
 
 const SignUpPage = () => {
