@@ -1,5 +1,5 @@
 "use client";
-import Button from "@/app/authentication/components/Button";
+import Button from "@/app/components/Button";
 import Field from "@/app/authentication/components/Field";
 import useForm from "@/app/authentication/hooks/useForm";
 import { z } from "zod";

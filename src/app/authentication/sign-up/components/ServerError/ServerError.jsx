@@ -1,6 +1,6 @@
 import Modal from "../Modal";
 import { CircleAlert } from "lucide-react";
-import Button from "../../../components/Button";
+import Button from "../../../../components/Button";
 import { useRouter } from "next/navigation";
 
 const ServerError = ({ status, onClose }) => {

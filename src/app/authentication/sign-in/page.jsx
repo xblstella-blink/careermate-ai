@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "../components/Button";
+import Button from "../../components/Button";
 import Field from "../components/Field";
 import Header from "../components/Header";
 import Hint from "../components/Hint";

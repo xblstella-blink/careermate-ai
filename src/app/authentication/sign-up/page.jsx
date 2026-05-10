@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Button from "../components/Button";
+import Button from "../../components/Button";
 import Field from "../components/Field";
 import getFullNameError from "./utils/getFullNameError";
 import getEmailError from "./utils/getEmailError";
