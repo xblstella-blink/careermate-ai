@@ -16,7 +16,7 @@ const HeroSection = () => (
       <div className="flex justify-center items-center gap-5 mt-12">
         <div className="w-[183px]">
           <Button>
-            Start for free <MoveRight />
+            Start for Free <MoveRight />
           </Button>
         </div>
         <div className="w-[180px]">

@@ -7,7 +7,7 @@ const HomeNav = () => {
   const linkClass = "hover:text-[#4285f4] transition-colors";
 
   return (
-    <div className="flex justify-between items-center px-8 py-6 mx-30 text-sm">
+    <div className="flex justify-between items-center px-30 py-4 text-sm fixed top-0 right-0 left-0 bg-white shadow-md z-10">
       <Image
         src={logo}
         alt="CareerMate AI"
