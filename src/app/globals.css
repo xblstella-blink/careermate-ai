@@ -5,3 +5,17 @@
   --background: #ffffff;
   --foreground: #171717;
 }
+
+@keyframes rocketFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@utility animate-rocketFloat {
+  animation: rocketFloat 3s ease-in-out infinite;
+}
