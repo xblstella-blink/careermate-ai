@@ -5,16 +5,16 @@ import { usePathname } from "next/navigation";
 import NavItem from "./components/NavItem";
 
 const NAV_ITEMS = [
-  { icon: User, label: "Basic Info", href: "/dashboard/basic-info" },
+  { icon: User, label: "Basic Info", href: "/dashboard/settings/basic-info" },
   {
     icon: BookOpen,
     label: "Career & Learning",
-    href: "/dashboard/career-learning",
+    href: "/dashboard/settings/career-learning",
   },
   {
     icon: ShieldCheck,
     label: "Account & Security",
-    href: "/dashboard/account-security",
+    href: "/dashboard/settings/account-security",
   },
 ];
 

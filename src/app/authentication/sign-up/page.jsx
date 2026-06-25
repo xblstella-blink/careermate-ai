@@ -74,7 +74,7 @@ const SignUpPage = () => {
                 const response = await auth.post("/auth/register", data);
                 const { accessToken } = response.data.data;
                 localStorage.setItem("token", accessToken);
-                router.push("/dashboard");
+                router.push("/onboarding");
               } catch (err) {
                 setServerError(err);
 

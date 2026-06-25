@@ -6,7 +6,7 @@ const SelectField = ({ label, options, value, onChange }) => {
 
   return (
     <div className="mb-6">
-      <label className="text-grey-700 mb-2 text-sm block" htmlFor="role">
+      <label className="text-grey-700 mb-2 text-sm block" htmlFor={id}>
         {label}
       </label>
       <div className="relative">
@@ -25,11 +25,7 @@ const SelectField = ({ label, options, value, onChange }) => {
             </option>
           ))}
         </select>
-        <div
-          className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-300 pointer-event-none"
-          size={16}
-          strokeWidth={0.5}
-        >
+        <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-300 pointer-events-none">
           <ChevronDown />
         </div>
       </div>

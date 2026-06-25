@@ -3,6 +3,9 @@
 import Button from "@/app/components/Button";
 import Field from "@/app/authentication/components/Field";
 import useForm from "@/app/authentication/hooks/useForm";
+import { useAuthentication } from "@/app/contexts/Authentication";
+import auth from "@/app/apis/auth";
+import { toast } from "sonner";
 import z from "zod";
 
 const schema = z
@@ -12,23 +15,29 @@ const schema = z
       .string()
       .min(8, "At least 8 characters")
       .regex(/[a-zA-Z]/, "Password must contain at least one letter")
-      .regex(/[0-9]/, "Password must contain at lease one number"),
+      .regex(/[0-9]/, "Password must contain at least one number"),
     confirmNewPassword: z.string().min(1, "Please confirm your password"),
   })
   .refine((data) => data.newPassword === data.confirmNewPassword, {
     path: ["confirmNewPassword"],
-    message: "Password do not match",
+    message: "Passwords do not match",
   });
 
 const AccountSecurityPage = () => {
+  const { user } = useAuthentication();
+
   const { data, onChange, onSubmit, error, isSubmitted } = useForm({
-    fields: ["email", "currentPassword", "newPassword", "confirmNewPassword"],
+    fields: ["currentPassword", "newPassword", "confirmNewPassword"],
     schema,
-    initialData: { email: "alice@example.com" },
+    initialData: {},
   });
 
-  const handleSave = () => {
-    //TODO: addToast('Saved successfully)
+  const handleSave = async () => {
+    await auth.patch("/users/me/password", {
+      currentPassword: data.currentPassword,
+      newPassword: data.newPassword,
+    });
+    toast.success("Password updated successfully");
   };
 
   return (
@@ -39,9 +48,9 @@ const AccountSecurityPage = () => {
       <div>
         <Field
           label="Login Email"
-          hint="Your email cannot be charged here, Contact support is needed"
+          hint="Your email cannot be changed here. Contact support if needed."
           readOnly
-          value={data.email}
+          value={user?.email ?? ""}
           useSetting
         />
       </div>
@@ -59,7 +68,7 @@ const AccountSecurityPage = () => {
       />
       <Field
         label="New Password"
-        placeholder="At least 8 characters,letters and numbers"
+        placeholder="At least 8 characters, letters and numbers"
         value={data.newPassword}
         type="password"
         onChange={onChange("newPassword")}
@@ -75,7 +84,6 @@ const AccountSecurityPage = () => {
         type="password"
         error={isSubmitted && error.confirmNewPassword}
       />
-
       <div className="w-[169px]">
         <Button>Update Password</Button>
       </div>

@@ -6,6 +6,7 @@ import SelectField from "./components/SelectField";
 import { z } from "zod";
 import { useAuthentication } from "@/app/contexts/Authentication";
 import auth from "@/app/apis/auth";
+import { toast } from "sonner";
 
 const schema = z.object({ goal: z.string().optional() });
 
@@ -22,16 +23,16 @@ const fields = [
 const CareerLearningPage = () => {
   const { user, mutate } = useAuthentication();
 
-  const { data, onChange, onSubmit, error, isSubmitted } = useForm({
+  const { data, onChange, onSubmit } = useForm({
     fields: ["goal", "role", "field"],
     schema,
     initialData: { goal: user.goal, role: user.role, field: user.field },
   });
 
   const handleSave = async () => {
-    console.log(data);
     await auth.patch("/users/me", data);
     await mutate();
+    toast.success("Career settings updated successfully");
   };
 
   return (
@@ -40,19 +41,17 @@ const CareerLearningPage = () => {
         Career & Learning
       </h2>
       <SelectField
-        label="Yor Role"
+        label="Your Role"
         options={roles}
         value={data.role}
         onChange={onChange("role")}
       />
-
       <SelectField
-        label="Yor Field"
+        label="Your Field"
         options={fields}
         value={data.field}
         onChange={onChange("field")}
       />
-
       <Field
         label="Your Goal"
         placeholder="What are you looking for?"
@@ -61,7 +60,7 @@ const CareerLearningPage = () => {
         value={data.goal}
       />
       <div className="w-[193px]">
-        <Button>Save Career Setting</Button>
+        <Button>Save Career Settings</Button>
       </div>
     </form>
   );

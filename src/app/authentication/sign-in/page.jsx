@@ -28,7 +28,8 @@ const SignInPage = () => {
   const { login, error: authError, loading, user } = useAuthentication();
 
   useEffect(() => {
-    if (user) router.push("/dashboard");
+    if (!user) return;
+    router.push(user.role ? "/dashboard" : "/onboarding");
   }, [user, router]);
 
   return (
