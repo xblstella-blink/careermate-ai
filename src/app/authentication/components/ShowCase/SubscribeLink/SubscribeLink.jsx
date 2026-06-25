@@ -4,4 +4,5 @@ const SubscribeLink = () => (
     <div>SUBSCRIBE</div>
   </button>
 );
+
 export default SubscribeLink;

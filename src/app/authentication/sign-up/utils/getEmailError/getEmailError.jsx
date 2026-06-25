@@ -13,4 +13,5 @@ const getEmailError = (email) =>
       message: "Please enter a valid email address",
     },
   ]);
+
 export default getEmailError;

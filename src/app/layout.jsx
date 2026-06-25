@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "./components/Header";
+import { AuthenticationProvider } from "./contexts/Authentication";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,15 +18,15 @@ export const metadata = {
   description: "Your AI Career Practice Partner",
 };
 
-export default function RootLayout({ children }) {
-  return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Header />
+const RootLayout = ({ children }) => (
+  <html lang="en">
+    <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <AuthenticationProvider>
+        <Toaster position="top-right" />
         {children}
-      </body>
-    </html>
-  );
-}
+      </AuthenticationProvider>
+    </body>
+  </html>
+);
+
+export default RootLayout;

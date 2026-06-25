@@ -12,4 +12,5 @@ const UserReview = () => (
     </div>
   </div>
 );
+
 export default UserReview;

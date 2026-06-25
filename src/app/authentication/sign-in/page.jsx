@@ -1,35 +1,43 @@
 "use client";
-import axios from "axios";
-import Button from "../components/Button";
+
+import Button from "../../components/Button";
 import Field from "../components/Field";
 import Header from "../components/Header";
 import Hint from "../components/Hint";
 import useForm from "../hooks/useForm";
-import getEmailError from "./utils/getEmailError";
-import getPasswordError from "./utils/getPasswordError";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ServerError from "./components/ServerError";
+import { useAuthentication } from "@/app/contexts/Authentication";
+import { z } from "zod";
+
+const schema = z.object({
+  email: z.string().min(1, "Email is required"),
+  password: z.string().min(1, "Password is required"),
+});
 
 const SignInPage = () => {
   const { onChange, data, onSubmit, isSubmitted, error } = useForm({
     fields: ["email", "password"],
-    validation: {
-      email: getEmailError,
-      password: getPasswordError,
-    },
+    schema,
   });
 
   const [serverError, setServerError] = useState(false);
 
   const router = useRouter();
+  const { login, error: authError, loading, user } = useAuthentication();
+
+  useEffect(() => {
+    if (!user) return;
+    router.push(user.role ? "/dashboard" : "/onboarding");
+  }, [user, router]);
 
   return (
     <>
       <form className="w-[440px] mx-auto">
         <Header
-          title={"Welcome Back"}
-          subTitle={"Log in to continue your AI journey"}
+          title="Welcome Back"
+          subTitle="Log in to continue your AI journey"
         />
         {serverError && <ServerError status={serverError.response?.status} />}
         <Field
@@ -56,19 +64,17 @@ const SignInPage = () => {
         />
         <div>
           <Button
-            onClick={(event) => {
-              onSubmit(async () => {
-                try {
-                  await axios.post("http://localhost:8000/v1/auth/login", data);
-                } catch (error) {
-                  setServerError(error);
-                  return;
-                }
-                router.push("/dashboard");
-              }, event);
-            }}
+            onClick={onSubmit(async () => {
+              try {
+                await login(data.email, data.password);
+              } catch (error) {
+                setServerError(error);
+
+                return;
+              }
+            })}
           >
-            Login
+            {loading ? "loading" : "Login"}
           </Button>
           <Hint
             message="Don't have an account?"

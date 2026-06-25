@@ -14,15 +14,19 @@ describe("Field", () => {
         onChange={vi.fn()}
       />,
     );
+
     expect(screen.getByRole("textbox", { name: "Email" })).toBeInTheDocument();
+
     expect(screen.getByRole("textbox", { name: "Email" })).toHaveAttribute(
       "type",
       "text",
     );
+
     expect(screen.getByRole("textbox", { name: "Email" })).toHaveAttribute(
       "placeholder",
       "Please type your email",
     );
+
     expect(screen.getByRole("textbox", { name: "Email" })).toHaveAttribute(
       "value",
       "alice@email.com",
@@ -36,15 +40,18 @@ describe("Field", () => {
       "type",
       "password",
     );
+
     expect(
       screen.getByRole("button", { name: "Show Password" }),
     ).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Show Password" }));
+
     expect(screen.getByRole("textbox", { name: "Password" })).toHaveAttribute(
       "type",
       "text",
     );
+
     expect(screen.getByRole("textbox", { name: "Password" })).toHaveAttribute(
       "value",
       "Password123.",
@@ -63,6 +70,7 @@ describe("Field", () => {
       "type",
       "password",
     );
+
     expect(
       screen.queryByRole("button", { name: "Hide Password" }),
     ).not.toBeInTheDocument();
@@ -82,8 +90,10 @@ describe("Field", () => {
     expect(
       within(screen.getByRole("alert")).getByText("Invalid email address"),
     ).toBeInTheDocument();
+
     expect(screen.getByText("Invalid email address")).toBeInTheDocument();
   });
+
   test("calls onChange on type in textbox", async () => {
     const onChange = vi.fn();
     const user = userEvent.setup();

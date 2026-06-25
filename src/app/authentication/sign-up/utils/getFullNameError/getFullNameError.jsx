@@ -1,5 +1,6 @@
 import getError from "../../../utils/getError";
 import { isEmpty } from "validator";
+
 const getFullNameError = (fullName) =>
   getError(fullName, [
     {

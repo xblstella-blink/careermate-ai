@@ -1,30 +1,36 @@
 "use client";
 import { useState } from "react";
-import Button from "../components/Button";
+import Button from "../../components/Button";
 import Field from "../components/Field";
 import getFullNameError from "./utils/getFullNameError";
 import getEmailError from "./utils/getEmailError";
 import getPasswordError from "./utils/getPasswordError";
-import axios from "axios";
 import ServerError from "./components/ServerError";
 import RegisteredSuccess from "../components/RegisteredSuccess";
 import { useRouter } from "next/navigation";
 import Header from "../components/Header";
 import Hint from "../components/Hint";
 import useForm from "../hooks/useForm";
+import auth from "@/app/apis/auth";
+import { email, z } from "zod";
+
+const schema = z.object({
+  fullName: z.string().min(1, "Name is required"),
+  email: z.string().min(1, "Email is required").email("Invalid email format"),
+  password: z
+    .string()
+    .min(8, "At least 8 characters")
+    .regex(/[a-zA-Z]/, "Password must contain at least one letter")
+    .regex(/[0-9]/, "Password must contain at lease one number"),
+});
 
 const SignUpPage = () => {
   const { onChange, data, onSubmit, isSubmitted, error } = useForm({
     fields: ["fullName", "email", "password"],
-    validation: {
-      fullName: getFullNameError,
-      email: getEmailError,
-      password: getPasswordError,
-    },
+    schema,
   });
 
   const [serverError, setServerError] = useState();
-  const [isRegistered, setIsRegistered] = useState(false);
 
   const router = useRouter();
 
@@ -32,8 +38,8 @@ const SignUpPage = () => {
     <>
       <form className="w-[440px] mx-auto">
         <Header
-          title={"Create Your Account"}
-          subTitle={"Join Career Mate AI and start your smart journey"}
+          title="Create Your Account"
+          subTitle="Join Career Mate AI and start your smart journey"
         />
 
         <Field
@@ -63,36 +69,35 @@ const SignUpPage = () => {
 
         <div>
           <Button
-            onClick={async (event) => {
-              onSubmit(async () => {
-                try {
-                  //throw new Error("register failed");
-                  await axios.post(
-                    "http://localhost:8000/v1/auth/register",
-                    data,
-                  );
-                  setIsRegistered(true);
-                  await new Promise((resolve) => setTimeout(resolve, 2000));
-                  router.push("/dashboard");
-                } catch (err) {
-                  setServerError(err);
-                  console.error("register fail", err);
-                  return;
-                }
-              }, event);
-            }}
+            onClick={onSubmit(async () => {
+              try {
+                const response = await auth.post("/auth/register", data);
+                const { accessToken } = response.data.data;
+                localStorage.setItem("token", accessToken);
+                router.push("/onboarding");
+              } catch (err) {
+                setServerError(err);
+
+                return;
+              }
+            })}
           >
             Create Account
           </Button>{" "}
           <Hint
-            message={"Already have an account"}
+            message="Already have an account"
             action={{ href: "/authentication/sign-in", text: "Login" }}
           />
         </div>
       </form>
-      {serverError && <ServerError status={serverError.response?.status} />}
-      {isRegistered && <RegisteredSuccess />}
+      {serverError && (
+        <ServerError
+          status={serverError.response?.status}
+          onClose={() => setServerError(null)}
+        />
+      )}
     </>
   );
 };
+
 export default SignUpPage;
