@@ -23,11 +23,15 @@ const OnboardingPage = () => {
   const handleBasicInfoNext = async () => {
     if (!formData.role || !formData.field) {
       toast.error("Please select your role and field");
+
       return;
     }
+
     const payload = {
       fullName: user.fullName,
-      ...Object.fromEntries(Object.entries(formData).filter(([, v]) => v !== "")),
+      ...Object.fromEntries(
+        Object.entries(formData).filter(([, v]) => v !== ""),
+      ),
     };
     try {
       await auth.patch("/users/me", payload);
